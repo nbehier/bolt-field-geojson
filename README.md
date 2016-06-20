@@ -2,7 +2,7 @@ Geojson Field for Bolt
 ======================
 
 This [bolt.cm](https://bolt.cm/) extension add an extra field type : `geojson`.
-It enables to draw geolocalised shapes on map.
+It enables to draw geolocalised shapes on map. [![SensioLabsInsight](https://insight.sensiolabs.com/projects/1f5e57ff-4b6b-4a59-b953-925e7ac90ce3/mini.png)](https://insight.sensiolabs.com/projects/1f5e57ff-4b6b-4a59-b953-925e7ac90ce3)
 
 ![Bolt geojson Field image](https://raw.githubusercontent.com/nbehier/bolt-field-geojson/master/extra/screenshot.png)
 
