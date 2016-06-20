@@ -95,6 +95,9 @@ In your twig template :
 ## See also
 - [Geojson specifications](http://geojson.org/geojson-spec.html)
 - [Style GeoJson specifications](http://gis.stackexchange.com/questions/22474/geojson-styling-information)
+- [Leaflet](https://github.com/Leaflet/Leaflet)
+- [Leaflet Draw Plugin](https://github.com/Leaflet/Leaflet.draw)
+- [Leaflet Style Editor Plugin](https://github.com/dwilhelm89/Leaflet.StyleEditor)
 
 ### License
 This Bolt extension is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
