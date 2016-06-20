@@ -1,0 +1,113 @@
+{#=== Options ========================================================================================================#}
+{% set attr_opt = {
+    class:    field.class|default(''),
+    name_id:  key,
+    required: field.required|default(false),
+    readonly: field.readonly|default(false)
+}%}
+
+{#=== Config =========================================================================================================#}
+{% set extension_config = app['bolt-field-geojson.config'] %}
+{% set map_cfg = {
+    zoom:      field.map.zoom is defined       ? field.map.zoom       : extension_config.get('map').zoom,
+    max_zoom:  field.map.max_zoom is defined   ? field.map.max_zoom   : extension_config.get('map').max_zoom,
+    height:    field.map.height is defined     ? field.map.height     : extension_config.get('map').height,
+    lat:       field.map.lat is defined        ? field.map.lat        : extension_config.get('map').lat,
+    long:      field.map.long is defined       ? field.map.long       : extension_config.get('map').long,
+    polyline:  field.draw.polyline is defined  ? field.draw.polyline  : extension_config.get('draw').polyline,
+    polygon:   field.draw.polygon is defined   ? field.draw.polygon   : extension_config.get('draw').polygon,
+    marker:    field.draw.marker is defined    ? field.draw.marker    : extension_config.get('draw').marker,
+    circle:    field.draw.circle is defined    ? field.draw.circle    : extension_config.get('draw').circle,
+    rectangle: field.draw.rectangle is defined ? field.draw.rectangle : extension_config.get('draw').rectangle,
+    remove:    field.draw.remove is defined    ? field.draw.remove    : extension_config.get('draw').remove,
+    style:     field.draw.style is defined     ? field.draw.style     : extension_config.get('draw').style
+} %}
+
+{#=== FIELDSET =======================================================================================================#}
+<fieldset class="form-group bolt-field-geojson">
+    <legend class="sr-only">{{field.label|default(key)}}</legend>
+    <label class="main col-xs-12 control-label control-label">{{field.label|default(key)}}
+        {% if field.info is not empty %}
+        <i class="info-pop fa fa-info-circle" data-content="{{ field.info|escape('html_attr') }}" data-html="1" data-title="Image list" data-original-title="" title=""><span class="sr-only">Info</span></i>
+        {% endif %}
+    </label>
+    <div class="col-xs-12">
+        <div id="map-{{ key }}" data-field-type="geojson" style="width: 100%; height: {{ map_cfg.height }}; border: 1px solid #ccc"></div>
+        <input type="hidden" {{ macro.attr(attr_opt) }} id="map-{{ key }}" value="{{ context.content.get(key)|default('') }}">
+    </div>
+    <script>
+    {% autoescape false %}
+    $(document).on('leskis-field-geojson:js-load', function(){
+        var $input = $('#{{ key }}');
+        var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            osm = L.tileLayer(osmUrl, {maxZoom: {{ map_cfg.max_zoom }}, attribution: osmAttrib}),
+            map = new L.Map('map-{{ key }}', {layers: [osm], center: new L.LatLng({{ map_cfg.lat }}, {{ map_cfg.long }}), zoom: {{ map_cfg.zoom }} });
+
+        var drawnItems;
+        var sVal = $input.val();
+        if (sVal != '') {
+            drawnItems = L.geoJson(JSON.parse(sVal ) );
+
+            // zoom to show all the features
+            map.fitBounds(drawnItems.getBounds() );
+        }
+        else {
+            drawnItems = L.geoJson();
+        }
+        map.addLayer(drawnItems);
+
+        {% if map_cfg.style %}
+            //Initialize the StyleEditor
+            var styleEditor = L.control.styleEditor({
+                position: "topright",
+                useGrouping: false,
+                openOnLeafletDraw: false
+            });
+            map.addControl(styleEditor);
+
+            // Prevent to submit bolt record form
+            $('.leaflet-styleeditor button').on('click', function(e) {
+                e.preventDefault();
+            })
+        {% endif %}
+
+        var drawControl = new L.Control.Draw({
+            position: 'topright',
+            draw: {
+                polyline: {{ map_cfg.polyline ? 'true' : 'false' }},
+                polygon: {{ map_cfg.polygon ? 'true' : 'false' }},
+                marker: {{ map_cfg.marker ? 'true' : 'false' }},
+                circle: {{ map_cfg.circle ? 'true' : 'false' }},
+                rectangle: {{ map_cfg.rectangle ? 'true' : 'false' }}
+            },
+            edit: {
+                featureGroup: drawnItems,
+                remove: {{ map_cfg.remove ? 'true' : 'false' }}
+            }
+        });
+        map.addControl(drawControl);
+
+        map.on('draw:created', function (e) {
+            var layer = e.layer;
+            drawnItems.addLayer(layer);
+            $input.val(JSON.stringify(drawnItems.toGeoJSON() ) );
+        });
+
+        map.on('draw:edited', function (e) {
+            $input.val(JSON.stringify(drawnItems.toGeoJSON() ) );
+        });
+
+        map.on('draw:deleted', function (e) {
+            $input.val(JSON.stringify(drawnItems.toGeoJSON() ) );
+        });
+
+        {% if map_cfg.style %}
+        map.on('styleeditor:changed', function(e){
+            $input.val(JSON.stringify(drawnItems.toGeoJSON() ) );
+        });
+        {% endif %}
+    });
+    {% endautoescape %}
+    </script>
+</fieldset>

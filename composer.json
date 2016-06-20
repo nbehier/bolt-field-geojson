@@ -1,0 +1,49 @@
+{
+    "name": "leskis/bolt-field-geojson",
+    "description": "Add geojson field type with drawing and styling tool on Bolt CMS",
+    "type": "bolt-extension",
+    "keywords": [
+        "map",
+        "geojson",
+        "editor",
+        "backend",
+        "field"
+    ],
+    "require": {
+        "bolt/bolt": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.7"
+    },
+    "suggest": {
+        "sahassar/gmaps": "A twig function to display a Google map."
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nicolas Béhier-Dévigne",
+            "homepage": "http://www.leskis.net",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Bolt\\Extension\\Leskis\\BoltFieldGeojson\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Bolt\\Extension\\Leskis\\BoltFieldGeojson\\Tests\\": "tests",
+            "Bolt\\Tests\\": "vendor/bolt/bolt/tests/phpunit/unit/"
+        }
+    },
+    "extra": {
+        "bolt-assets": "web",
+        "bolt-class": "Bolt\\Extension\\Leskis\\BoltFieldGeojson\\BoltFieldGeojsonExtension",
+        "bolt-screenshots" : [
+            "extra/screenshot.png"
+        ]
+    }
+}

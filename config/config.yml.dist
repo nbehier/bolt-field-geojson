@@ -1,0 +1,14 @@
+map:
+    zoom:     13        # Initial default zoom level for the default backend map (0 for all earth, 23 for house details)
+    max_zoom: 18        # Max default detailed zoom level for the backend map
+    height:   300px     # Default height for the backend map
+    lat:      48.856578 # Default center latitude for the default backend map
+    long:     2.351828  # Default center longitude for the default backend map
+draw:
+    polyline:  true     # Defined if user could draw polylines
+    polygon:   true     # Defined if user could draw polygons
+    marker:    true     # Defined if user could draw markers
+    circle:    false    # Defined if user could draw circles
+    rectangle: false    # Defined if user could draw rectangles
+    remove:    true     # Defined if user could remove shapes
+    style:     false    # not implemented yet
