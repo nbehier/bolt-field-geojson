@@ -42,6 +42,7 @@
     "extra": {
         "bolt-assets": "web",
         "bolt-class": "Bolt\\Extension\\Leskis\\BoltFieldGeojson\\BoltFieldGeojsonExtension",
+        "bolt-icon": "extra/geojson-logo.png",
         "bolt-screenshots" : [
             "extra/screenshot.png"
         ]
