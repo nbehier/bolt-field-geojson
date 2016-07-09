@@ -32,82 +32,27 @@
         {% endif %}
     </label>
     <div class="col-xs-12">
-        <div id="map-{{ key }}" data-field-type="geojson" style="width: 100%; height: {{ map_cfg.height }}; border: 1px solid #ccc"></div>
-        <input type="hidden" {{ macro.attr(attr_opt) }} id="map-{{ key }}" value="{{ context.content.get(key)|default('') }}">
+        <div id="map-{{ key }}"
+            data-field-type="geojson"
+            data-geojsonfield-zoom="{{ map_cfg.zoom }}"
+            data-geojsonfield-maxzoom="{{ map_cfg.max_zoom }}"
+            data-geojsonfield-lat="{{ map_cfg.lat }}"
+            data-geojsonfield-long="{{ map_cfg.long }}"
+            data-geojsonfield-polyline="{{ map_cfg.polyline }}"
+            data-geojsonfield-polygon="{{ map_cfg.polygon }}"
+            data-geojsonfield-marker="{{ map_cfg.marker }}"
+            data-geojsonfield-circle="{{ map_cfg.circle }}"
+            data-geojsonfield-rectangle="{{ map_cfg.rectangle }}"
+            data-geojsonfield-remove="{{ map_cfg.remove }}"
+            data-geojsonfield-style="{{ map_cfg.style }}"
+            style="width: 100%; height: {{ map_cfg.height }}; border: 1px solid #ccc"></div>
+        <input type="hidden" {{ macro.attr(attr_opt) }} id="{{ key }}" value="{{ context.content.get(key)|default('') }}">
     </div>
     <script>
-    {% autoescape false %}
-    $(document).on('leskis-field-geojson:js-load', function(){
-        var $input = $('#{{ key }}');
-        var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            osm = L.tileLayer(osmUrl, {maxZoom: {{ map_cfg.max_zoom }}, attribution: osmAttrib}),
-            map = new L.Map('map-{{ key }}', {layers: [osm], center: new L.LatLng({{ map_cfg.lat }}, {{ map_cfg.long }}), zoom: {{ map_cfg.zoom }} });
-
-        var drawnItems;
-        var sVal = $input.val();
-        if (sVal != '') {
-            drawnItems = L.geoJson(JSON.parse(sVal ) );
-
-            // zoom to show all the features
-            map.fitBounds(drawnItems.getBounds() );
-        }
-        else {
-            drawnItems = L.geoJson();
-        }
-        map.addLayer(drawnItems);
-
-        {% if map_cfg.style %}
-            //Initialize the StyleEditor
-            var styleEditor = L.control.styleEditor({
-                position: "topright",
-                useGrouping: false,
-                openOnLeafletDraw: false
+        $( function() {
+            $( "#map-{{ key }}" ).jqGeojsonField({
+                inputSelector: "#{{ key }}"
             });
-            map.addControl(styleEditor);
-
-            // Prevent to submit bolt record form
-            $('.leaflet-styleeditor button').on('click', function(e) {
-                e.preventDefault();
-            })
-        {% endif %}
-
-        var drawControl = new L.Control.Draw({
-            position: 'topright',
-            draw: {
-                polyline: {{ map_cfg.polyline ? 'true' : 'false' }},
-                polygon: {{ map_cfg.polygon ? 'true' : 'false' }},
-                marker: {{ map_cfg.marker ? 'true' : 'false' }},
-                circle: {{ map_cfg.circle ? 'true' : 'false' }},
-                rectangle: {{ map_cfg.rectangle ? 'true' : 'false' }}
-            },
-            edit: {
-                featureGroup: drawnItems,
-                remove: {{ map_cfg.remove ? 'true' : 'false' }}
-            }
-        });
-        map.addControl(drawControl);
-
-        map.on('draw:created', function (e) {
-            var layer = e.layer;
-            drawnItems.addLayer(layer);
-            $input.val(JSON.stringify(drawnItems.toGeoJSON() ) );
-        });
-
-        map.on('draw:edited', function (e) {
-            $input.val(JSON.stringify(drawnItems.toGeoJSON() ) );
-        });
-
-        map.on('draw:deleted', function (e) {
-            $input.val(JSON.stringify(drawnItems.toGeoJSON() ) );
-        });
-
-        {% if map_cfg.style %}
-        map.on('styleeditor:changed', function(e){
-            $input.val(JSON.stringify(drawnItems.toGeoJSON() ) );
-        });
-        {% endif %}
-    });
-    {% endautoescape %}
+        } );
     </script>
 </fieldset>
