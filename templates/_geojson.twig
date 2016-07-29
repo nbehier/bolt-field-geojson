@@ -27,7 +27,7 @@
 <fieldset class="form-group bolt-field-geojson">
     <legend class="sr-only">{{field.label|default(key)}}</legend>
     <label class="main col-xs-12 control-label control-label">{{field.label|default(key)}}
-        {% if field.info is not empty %}
+        {% if field.info|default(false) %}
         <i class="info-pop fa fa-info-circle" data-content="{{ field.info|escape('html_attr') }}" data-html="1" data-title="Image list" data-original-title="" title=""><span class="sr-only">Info</span></i>
         {% endif %}
     </label>
