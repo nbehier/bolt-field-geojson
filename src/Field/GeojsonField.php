@@ -3,13 +3,14 @@
 namespace Bolt\Extension\Leskis\BoltFieldGeojson\Field;
 
 use Bolt\Storage\Field\FieldInterface;
+use Doctrine\DBAL\Types\Type;
 
 /**
  * GeojsonField class.
  *
  * @author Nicolas Béhier-Dévigne
  */
-class GeojsonField implements FieldInterface
+class GeojsonField extends FieldTypeBase
 {
     public function getName()
     {
@@ -23,7 +24,7 @@ class GeojsonField implements FieldInterface
 
     public function getStorageType()
     {
-        return 'json_array';
+        return Type::getType('json_array');
     }
 
     public function getStorageOptions()
