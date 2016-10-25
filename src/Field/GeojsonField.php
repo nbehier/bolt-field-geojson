@@ -2,7 +2,7 @@
 
 namespace Bolt\Extension\Leskis\BoltFieldGeojson\Field;
 
-use Bolt\Storage\Field\FieldInterface;
+use Bolt\Storage\Field\Type\FieldTypeBase;
 use Doctrine\DBAL\Types\Type;
 
 /**
