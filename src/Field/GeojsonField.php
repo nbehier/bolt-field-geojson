@@ -2,7 +2,8 @@
 
 namespace Bolt\Extension\Leskis\BoltFieldGeojson\Field;
 
-use Bolt\Storage\Field\Type\FieldTypeBase;
+//use Bolt\Storage\Field\Type\FieldTypeBase;
+use Bolt\Field\FieldInterface;
 use Doctrine\DBAL\Types\Type;
 
 /**
@@ -10,7 +11,7 @@ use Doctrine\DBAL\Types\Type;
  *
  * @author Nicolas Béhier-Dévigne
  */
-class GeojsonField extends FieldTypeBase
+class GeojsonField implements FieldInterface //extends FieldTypeBase
 {
     public function getName()
     {
