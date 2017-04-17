@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  */
 class BoltFieldGeojsonExtension extends SimpleExtension
 {
-    public function registerFields()
+    protected function registerFields()
     {
         return [
             new GeojsonField(),
