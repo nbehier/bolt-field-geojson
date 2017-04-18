@@ -14,6 +14,8 @@
     height:    field.map.height is defined     ? field.map.height     : extension_config.get('map').height,
     lat:       field.map.lat is defined        ? field.map.lat        : extension_config.get('map').lat,
     long:      field.map.long is defined       ? field.map.long       : extension_config.get('map').long,
+    osm_url:   field.map.osm_url is defined    ? field.map.osm_url    : extension_config.get('map').osm_url,
+    osm_cont:  field.map.osm_cont is defined   ? field.map.osm_cont   : extension_config.get('map').osm_cont,
     polyline:  field.draw.polyline is defined  ? field.draw.polyline  : extension_config.get('draw').polyline,
     polygon:   field.draw.polygon is defined   ? field.draw.polygon   : extension_config.get('draw').polygon,
     marker:    field.draw.marker is defined    ? field.draw.marker    : extension_config.get('draw').marker,
@@ -38,6 +40,8 @@
             data-geojsonfield-maxzoom="{{ map_cfg.max_zoom }}"
             data-geojsonfield-lat="{{ map_cfg.lat }}"
             data-geojsonfield-long="{{ map_cfg.long }}"
+            data-geojsonfield-osmurl="{{ map_cfg.osm_url }}"
+            data-geojsonfield-osmcont="{{ map_cfg.osm_cont }}"
             data-geojsonfield-polyline="{{ map_cfg.polyline }}"
             data-geojsonfield-polygon="{{ map_cfg.polygon }}"
             data-geojsonfield-marker="{{ map_cfg.marker }}"

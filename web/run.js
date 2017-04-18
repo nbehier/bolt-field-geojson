@@ -18,6 +18,8 @@
             maxzoom:       18,
             lat:           48.856578,
             long:          2.351828,
+            osmurl:        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            osmcont:       '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             polyline:      true,
             polygon:       true,
             marker:        true,
@@ -70,6 +72,8 @@
             if (defaults.hasOwnProperty('geojsonfieldMaxzoom') )   { this.settings.maxzoom = defaults.geojsonfieldMaxzoom; }
             if (defaults.hasOwnProperty('geojsonfieldLat') )       { this.settings.lat = defaults.geojsonfieldLat; }
             if (defaults.hasOwnProperty('geojsonfieldLong') )      { this.settings.long = defaults.geojsonfieldLong; }
+            if (defaults.hasOwnProperty('geojsonfieldOsmurl') )    { this.settings.osmurl = defaults.geojsonfieldOsmurl; }
+            if (defaults.hasOwnProperty('geojsonfieldOsmcont') )   { this.settings.osmcont = defaults.geojsonfieldOsmcont; }
             if (defaults.hasOwnProperty('geojsonfieldPolyline') )  { this.settings.polyline = defaults.geojsonfieldPolyline; }
             if (defaults.hasOwnProperty('geojsonfieldPolygon') )   { this.settings.polygon = defaults.geojsonfieldPolygon; }
             if (defaults.hasOwnProperty('geojsonfieldMarker') )    { this.settings.marker = defaults.geojsonfieldMarker; }
@@ -79,19 +83,17 @@
             if (defaults.hasOwnProperty('geojsonfieldStyle') )     { this.settings.style = defaults.geojsonfieldStyle; }
         },
         createMap: function() {
-            var osmUrl    = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                osm       = L.tileLayer(osmUrl, {
-                                maxZoom:     this.settings.maxzoom,
-                                attribution: osmAttrib
-                            }),
-                sVal      = this.$input.val();
+            var osm  = L.tileLayer(this.settings.osmurl, {
+                           maxZoom:     this.settings.maxzoom,
+                           attribution: this.settings.osmcont
+                       }),
+                sVal = this.$input.val();
 
-            this.map      = new L.Map(this.element, {
-                                layers: [osm],
-                                center: new L.LatLng(this.settings.lat, this.settings.long),
-                                zoom:   this.settings.zoom
-                            });
+            this.map = new L.Map(this.element, {
+                           layers: [osm],
+                           center: new L.LatLng(this.settings.lat, this.settings.long),
+                           zoom:   this.settings.zoom
+                       });
 
             this.map.invalidateSize();
 

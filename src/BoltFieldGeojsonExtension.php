@@ -62,6 +62,8 @@ class BoltFieldGeojsonExtension extends SimpleExtension
                 'height'   => '300px',
                 'lat'      => 48.856578,
                 'long'     => 2.351828,
+                'osm_url'  => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                'osm_cont' => '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             ],
             'draw' => [
                 'polyline'  => true,

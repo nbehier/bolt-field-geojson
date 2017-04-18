@@ -28,6 +28,8 @@ map:
     height:   300px     # Default height for the backend map
     lat:      48.856578 # Default center latitude for the default backend map
     long:     2.351828  # Default center longitude for the default backend map
+    osm_url:  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    osm_cont: '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 draw:
     polyline:  true     # Defined if user could draw polylines
     polygon:   true     # Defined if user could draw polygons
@@ -51,6 +53,8 @@ showcases:
                 height: 300px    # Height for the backend map
                 lat: 48.856578   # Center latitude for the default backend map
                 long: 2.351828   # Center longitude for the default backend map
+                osm_url: 'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png'
+                osm_cont: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>'
             draw:
                 polyline: true   # Defined if user could draw polylines
                 polygon: true    # Defined if user could draw polygons

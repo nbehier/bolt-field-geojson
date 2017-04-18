@@ -4,6 +4,8 @@ map:
     height:   300px     # Default height for the backend map
     lat:      48.856578 # Default center latitude for the default backend map
     long:     2.351828  # Default center longitude for the default backend map
+    osm_url:  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    osm_cont: '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 draw:
     polyline:  true     # Defined if user could draw polylines
     polygon:   true     # Defined if user could draw polygons
