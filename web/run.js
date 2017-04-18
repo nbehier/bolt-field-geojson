@@ -50,6 +50,18 @@
             if (this.settings.style) {
                 this.addStyleEditor();
             }
+
+            this.waitingToShow();
+        },
+        // Wait until div is visible, to load tiles on every part of the container
+        waitingToShow: function() {
+            var _this = this;
+
+            if (! $(_this.element).is(':visible') ) {
+                window.setTimeout(function(){ _this.waitingToShow(); }, 500);
+            } else {
+                _this.map.invalidateSize();
+            }
         },
         loadSettingsFromDataAttributes: function() {
             var defaults = $(this.element).data();
