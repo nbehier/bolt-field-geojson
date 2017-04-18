@@ -81,6 +81,8 @@
                                 zoom:   this.settings.zoom
                             });
 
+            this.map.invalidateSize();
+
             if (sVal != '') {
                 this.drawnItems = L.geoJson(JSON.parse(sVal ) );
 
